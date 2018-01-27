@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">CryptoConverter</string>
     <string name="currency_api">https://api.cryptonator.com/api/currencies</string>
-    <array name="currencies">
-    </array>
+    <string name="convert_api">https://api.cryptonator.com/api/ticker/%1$s-%2$s</string>
 </resources>

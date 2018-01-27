@@ -66,6 +66,8 @@ public class CryptoAPI extends AsyncTask <String, String, String> {
         return null;
     }
 
+
+
     @Override
     protected void onPostExecute(String input) {
         super.onPostExecute(input);
