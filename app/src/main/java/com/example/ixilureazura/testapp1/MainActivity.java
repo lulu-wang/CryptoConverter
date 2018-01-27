@@ -34,10 +34,11 @@ public class MainActivity extends AppCompatActivity {
         toDrop = findViewById(R.id.toDrop);
         convertButton = findViewById(R.id.convertButton);
         convertedValue = findViewById(R.id.convertedValue);
-        textFrom = findViewById(R.id.textFrom);
-        textTo = findViewById(R.id.textTo);
 
-        final ArrayList<String> currencyNames = new ArrayList<String>();
+        final ArrayAdapter<String> fromAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item);
+        final ArrayAdapter<String> toAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item);
+        fromDrop.setAdapter(fromAdapter);
+        toDrop.setAdapter(toAdapter);
 
         new CryptoAPI(new CryptoAPI.Response() {
             @Override
@@ -49,35 +50,16 @@ public class MainActivity extends AppCompatActivity {
                         JSONObject entry = rows.getJSONObject(i);
                         String code = entry.getString("code");
                         String name = entry.getString("name");
-                        currencyNames.add(name + " (" + code + ") ");
+                        fromAdapter.add(name + " (" + code + ") ");
+                        toAdapter.add(name + " (" + code + ") ");
                     }
+                    fromAdapter.notifyDataSetChanged();
+                    toAdapter.notifyDataSetChanged();
                 } catch (JSONException j) {
                     j.printStackTrace();
                 }
             }
         }).execute(getString(R.string.currency_api));
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.spinner_item, currencyNames);
-        adapter.setDropDownViewResource(R.layout.spinner_item);
-
-        fromDrop.setAdapter(adapter);
-        toDrop.setAdapter(adapter);
-
-        fromDrop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                String text = fromDrop.getSelectedItem().toString();
-                textFrom.setText("hi");
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-
-        });
-
 
         convertButton.setOnClickListener(new View.OnClickListener() {
             @Override
